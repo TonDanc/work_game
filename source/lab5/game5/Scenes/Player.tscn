@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://g5player"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Assets/Models/poly/astronaut.glb" id="2"]
+[ext_resource type="Script" path="res://Scripts/CameraMovement.gd" id="3"]
+[ext_resource type="ArrayMesh" uid="uid://deu06eho4c74" path="res://Assets/Resources/cloud.res" id="4"]
+[ext_resource type="AudioStream" uid="uid://ncq6fpsrcmjh" path="res://Assets/Audio/SFX/walking.ogg" id="5"]
+
+[sub_resource type="CapsuleShape3D" id="cap"]
+radius = 0.4
+height = 1.4
+
+[sub_resource type="StandardMaterial3D" id="dust"]
+diffuse_mode = 2
+specular_mode = 2
+metallic_specular = 0.0
+
+[sub_resource type="Curve" id="curve"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.236318, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+script = ExtResource("1")
+jump_force = 6.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("cap")
+
+[node name="Astronaut" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 0, 0)
+
+[node name="Gimbal" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("3")
+
+[node name="Camera3D" type="Camera3D" parent="Gimbal"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.5, 6.5)
+current = true
+far = 300.0
+
+[node name="CameraControlTimer" type="Timer" parent="Gimbal"]
+wait_time = 2.0
+
+[node name="ParticleTrail" type="CPUParticles3D" parent="."]
+material_override = SubResource("dust")
+amount = 30
+mesh = ExtResource("4")
+emission_shape = 1
+emission_sphere_radius = 0.2
+particle_flag_align_y = true
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 0.1, 0)
+scale_amount_min = 0.75
+scale_amount_curve = SubResource("curve")
+
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5")
+pitch_scale = 0.75
+autoplay = true
+
+[connection signal="timeout" from="Gimbal/CameraControlTimer" to="Gimbal" method="_on_camera_control_timer_timeout"]

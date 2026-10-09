@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://b22hud"]
+
+[ext_resource type="Script" path="res://HUD.gd" id="s"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("s")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 78.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 56
+text = "0"
+horizontal_alignment = 1
+
+[node name="BestLabel" type="Label" parent="."]
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 160.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 22
+text = "Best: 0"
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -110.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+text = "SPACE DODGE
+หลบให้รอด!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -190.0
+offset_right = 110.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 44
+text = "เริ่มเกม"
+
+[node name="Help" type="Label" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.75, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "ลูกศร / WASD เพื่อบิน · Enter เพื่อเริ่ม"
+horizontal_alignment = 1
+
+[node name="StudentLabel" type="Label" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "673380361-2 แดนชล ประไชโย"
+horizontal_alignment = 1
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

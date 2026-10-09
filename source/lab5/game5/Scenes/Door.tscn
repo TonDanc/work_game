@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://g5door"]
+
+[ext_resource type="Script" path="res://Scripts/Door.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Assets/Models/poly/door.glb" id="2"]
+[ext_resource type="FontFile" path="res://Assets/Fonts/Sarabun-Bold.ttf" id="3"]
+
+[sub_resource type="BoxShape3D" id="shape"]
+size = Vector3(1.6, 2.5, 1.4)
+
+[node name="Door" type="Area3D"]
+script = ExtResource("1")
+
+[node name="Model" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0.52, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("shape")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+billboard = 1
+no_depth_test = true
+text = "เก็บพลังงานให้ครบ"
+font = ExtResource("3")
+font_size = 64
+outline_size = 16
+pixel_size = 0.006
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0.8)
+light_color = Color(1, 0.3, 0.2, 1)
+light_energy = 3.0
+omni_range = 5.0

@@ -1,0 +1,34 @@
+[gd_scene load_steps=10 format=3 uid="uid://b22mob"]
+
+[ext_resource type="Script" path="res://Mob.gd" id="s"]
+[ext_resource type="Texture2D" path="res://art/ufo1.svg" id="a1"]
+[ext_resource type="Texture2D" path="res://art/ufo2.svg" id="a2"]
+[ext_resource type="Texture2D" path="res://art/rock1.svg" id="r1"]
+[ext_resource type="Texture2D" path="res://art/rock2.svg" id="r2"]
+[ext_resource type="Texture2D" path="res://art/jelly1.svg" id="j1"]
+[ext_resource type="Texture2D" path="res://art/jelly2.svg" id="j2"]
+
+[sub_resource type="SpriteFrames" id="sf"]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("a1")}, {"duration": 1.0, "texture": ExtResource("a2")}], "loop": true, "name": &"ufo", "speed": 4.0}, {"frames": [{"duration": 1.0, "texture": ExtResource("r1")}, {"duration": 1.0, "texture": ExtResource("r2")}], "loop": true, "name": &"meteor", "speed": 6.0}, {"frames": [{"duration": 1.0, "texture": ExtResource("j1")}, {"duration": 1.0, "texture": ExtResource("j2")}], "loop": true, "name": &"jelly", "speed": 3.0}]
+
+[sub_resource type="CapsuleShape2D" id="cs"]
+radius = 18.0
+height = 52.0
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("sf")
+animation = &"ufo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("cs")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

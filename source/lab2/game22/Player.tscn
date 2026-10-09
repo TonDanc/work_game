@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://b22player"]
+
+[ext_resource type="Script" path="res://Player.gd" id="s"]
+[ext_resource type="Texture2D" path="res://art/astro_up1.svg" id="u1"]
+[ext_resource type="Texture2D" path="res://art/astro_up2.svg" id="u2"]
+[ext_resource type="Texture2D" path="res://art/astro_walk1.svg" id="w1"]
+[ext_resource type="Texture2D" path="res://art/astro_walk2.svg" id="w2"]
+
+[sub_resource type="SpriteFrames" id="sf"]
+animations = [{"frames": [{"duration": 1.0, "texture": ExtResource("u1")}, {"duration": 1.0, "texture": ExtResource("u2")}], "loop": true, "name": &"up", "speed": 8.0}, {"frames": [{"duration": 1.0, "texture": ExtResource("w1")}, {"duration": 1.0, "texture": ExtResource("w2")}], "loop": true, "name": &"walk", "speed": 6.0}]
+
+[sub_resource type="CapsuleShape2D" id="cs"]
+radius = 20.0
+height = 56.0
+
+[node name="Player" type="Area2D"]
+script = ExtResource("s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("sf")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("cs")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
